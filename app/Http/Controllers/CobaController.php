@@ -8,21 +8,23 @@ class CobaController extends Controller
 {
     public function index()
     {
-        return 'test berhasil';
+        $friends = Friends::paginate(3);        
+        return view('index', compact('friends'));
     }
 
-    public function urutan($ke)
-    {
-        $numbers = [
-            ['ke' => $ke, 'nomor' => 20],
-            ['ke' => $ke, 'nomor' => 30],
-            ['ke' => $ke, 'nomor' => 40]
-        ];        
-        return view('urutan', compact('numbers'));
+    public function create()
+    {        
+        return view('create');
     }
-
-    public function coba($ke)
+    
+    public function store(Request $request)
     {
-        return view('coba', ['ke' => $ke]);
+        $friends = new Friends;
+
+        $friends->name = $request->nama;
+        $friends->no_tlp = $request->no-tlp;
+        $friends->alamat = $request->alamat;
+
+        $friends->save();
     }
 }
